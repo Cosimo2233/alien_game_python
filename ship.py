@@ -11,6 +11,14 @@ class Ship:
         self.rect=self.image.get_rect()
         #对于每艘新飞船，都将其放在屏幕底部中央
         self.rect.midbottom=self.screen_rect.midbottom
+
+        #移动标志(一开始不动)
+        self.moving_right =False
     def blitme(self):
         """在指定位置绘制飞船"""
         self.screen.blit(self.image,self.rect)
+
+    def update(self):
+        """根据移动标志调整位置"""
+        if self.moving_right:
+            self.rect.x+=1

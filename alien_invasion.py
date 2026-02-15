@@ -10,6 +10,9 @@ class AlienInvasion:
         pygame.init()
         self.clock=pygame.time.Clock()
         self.settings=Settings()
+        # self.screeen=pygame.display.set_mode((0,0),pygame.FULLSCREEN)
+        # self.settings.screen_width=self.screeen.get_rect().width
+        # self.settings.screen_height=self.screeen.get_rect().height
         self.screen = pygame.display.set_mode((self.settings.screen_width,self.settings.screen_height))
         pygame.display.set_caption("Alien Invasion")
         self.ship=Ship(self)
@@ -30,11 +33,9 @@ class AlienInvasion:
             if event.type==pygame.QUIT:
                 sys.exit()
             elif event.type==pygame.KEYDOWN:
-                if event.key ==pygame.K_d:
-                    self.ship.moving_right=True
+                self._check_keydown_events(event)
             elif event.type==pygame.KEYUP:
-                if event.key ==pygame.K_d:
-                    self.ship.moving_right=False
+                self._event_keyup_events((event))
 
     def _update_screen(self):
         """更新屏幕"""
@@ -42,6 +43,30 @@ class AlienInvasion:
         self.ship.blitme()
             
         pygame.display.flip()
+    
+    def _check_keydown_events(self,event):
+        """响应按下"""
+        if event.key ==pygame.K_d:
+           self.ship.moving_right=True
+        elif event.key==pygame.K_a:
+            self.ship.moving_left=True
+        elif event.key==pygame.K_w:
+            self.ship.moving_up=True
+        elif event.key==pygame.K_s:
+            self.ship.moving_down=True  
+        elif event.key==pygame.K_q:
+            sys.exit()
+
+    def _event_keyup_events(self,event):
+        """响应释放"""
+        if event.key ==pygame.K_d:
+            self.ship.moving_right=False
+        elif event.key ==pygame.K_a:
+            self.ship.moving_left=False
+        elif event.key==pygame.K_w:
+            self.ship.moving_up=False
+        elif event.key==pygame.K_s:
+            self.ship.moving_down=False
 
 if __name__=='__main__':
     #创建游戏实例并运行游戏
